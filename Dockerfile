@@ -1,23 +1,26 @@
-# Start from a Node.js base image
+# Use official Node.js 18 base image
 FROM node:18
 
 # Install pnpm globally
 RUN npm install -g pnpm
 
-# Create app directory
+# Set working directory
 WORKDIR /app
 
-# Copy the entire repo
+# Copy all source files
 COPY . .
 
-# Install dependencies
+# Install dependencies across the monorepo
 RUN pnpm install
 
-# Build the webapp
+# Build only the webapp
 RUN pnpm --filter webapp build
 
-# Set working directory for webapp
+# Expose the port used by the webapp
+EXPOSE 3000
+
+# Set working directory to the webapp
 WORKDIR /app/apps/webapp
 
-# Start the app
+# Start the app (use dev if you want live logs during debugging)
 CMD ["pnpm", "start"]
