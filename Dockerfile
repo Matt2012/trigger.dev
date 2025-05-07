@@ -6,15 +6,12 @@ WORKDIR /app
 
 COPY . .
 
-RUN pnpm install
+RUN pnpm install --frozen-lockfile
 
-# ✅ Fix: override Prisma client version
-RUN pnpm add -w @prisma/client@5.2.0
+# ⬅️ Add this step to ensure Prisma types are generated
+RUN npx prisma generate
 
-# 🔧 Build internal packages first
 RUN pnpm build
-
-# 🔧 Then build the webapp
 RUN pnpm --filter webapp build
 
 EXPOSE 3000
