@@ -8,10 +8,13 @@ COPY . .
 
 RUN pnpm install
 
-# 🔧 NEW: build all internal packages first
+# ✅ Fix: override Prisma client version
+RUN pnpm add -w @prisma/client@5.3.1
+
+# 🔧 Build internal packages first
 RUN pnpm build
 
-# 🔧 THEN: build the webapp (no longer fails due to missing deps)
+# 🔧 Then build the webapp
 RUN pnpm --filter webapp build
 
 EXPOSE 3000
