@@ -9,7 +9,7 @@ COPY . .
 RUN pnpm install
 
 # ✅ Fix: override Prisma client version
-RUN pnpm add -w @prisma/client@5.3.1
+RUN pnpm add -w @prisma/client@5.2.0
 
 # 🔧 Build internal packages first
 RUN pnpm build
